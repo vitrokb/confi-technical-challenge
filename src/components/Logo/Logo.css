@@ -1,0 +1,9 @@
+.logo-wrapper {
+  max-width: 200px;
+  max-height: 200px;
+  margin: 6rem 0 1rem;
+}
+
+.logo-image {
+  width: -webkit-fill-available;;
+}

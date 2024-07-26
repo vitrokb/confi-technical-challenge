@@ -1,0 +1,10 @@
+.input-wrapper {
+  width: 100%;
+
+}
+
+@media (min-width: 1025px) {
+  .input-wrapper {
+    width: 780px;
+  }
+}
