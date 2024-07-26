@@ -1,0 +1,38 @@
+.order-wrapper {
+  display: flex;
+  background-color: #C0E2FA;
+  flex-direction: column;
+  padding: 4rem;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.section-wrapper {
+  margin-bottom: 5rem;
+}
+
+.field-content {
+  margin-right: 5rem;
+}
+
+.title-text {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.product-content {
+  margin-top: 1rem;
+}
+
+@media (min-width: 575px) {
+  .product-content {
+    margin-top: 0;
+    margin-left: 2rem;
+  }
+}
+
+@media (min-width: 1023px) {
+  .field-content {
+    margin-right: 10rem;
+  }
+}
