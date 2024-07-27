@@ -7,6 +7,11 @@
   height: 50px;
 }
 
+.warning-paragraph {
+  margin-top: 2rem;
+  color: red;
+}
+
 @media (min-width: 1025px) {
   .input-wrapper {
     width: 780px;

@@ -1,11 +1,18 @@
-import { useState } from 'react';
-import './SearchContainer.css';
+import { useContext, useEffect, useState } from 'react';
 import { useFetch } from '../../Hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
+import { OrderContext } from '../../contexts/OrderProvider/OrderProvider';
+import './SearchContainer.css';
 
 function SearchContainer() {
-  const [orderNumber, setOrderNumber] = useState('');
-  const [orderEmail, setOrderEmail] = useState('');
-  const { loading, result, fetchData } = useFetch();
+  const [orderNumber, setOrderNumber] = useState('1025');
+  const [orderEmail, setOrderEmail] = useState('abner.persio@after.sale');
+  const [showWarning, setShowWarning] = useState(false);
+
+  const { loading, response, fetchData, setResponse } = useFetch();
+  const navigate = useNavigate();
+
+  const { setOrders } = useContext(OrderContext);
 
   function verifyEmail(email: string) {
     const emailReg = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -23,8 +30,29 @@ function SearchContainer() {
     await fetchData(url, options);
   }
 
-  console.log('result', result);
-  console.log('loading', loading);
+  function checkWarning() {
+    if (showWarning) {
+      setShowWarning(false);
+    }
+  }
+
+  useEffect(() => {
+    if (!response) {
+      return;
+    }
+
+    if (response?.orders[0]?.email != orderEmail) {
+      setShowWarning(true);
+      setResponse(null);
+    }
+
+    if (response?.orders[0]?.email == orderEmail) {
+      setOrders(response);
+      return navigate('/order');
+    }
+  }, [response, orderEmail, setResponse, navigate, setOrders]);
+
+  console.log('response', response);
 
   return (
     <section className="w-75 h-50 m-3 d-flex flex-column justify-content-center align-items-center">
@@ -40,7 +68,10 @@ function SearchContainer() {
             type="text"
             className="form-control"
             value={orderNumber}
-            onChange={(e) => setOrderNumber(e.target.value)}
+            onChange={(e) => {
+              setOrderNumber(e.target.value);
+              checkWarning();
+            }}
           ></input>
         </div>
 
@@ -54,7 +85,10 @@ function SearchContainer() {
             type="text"
             className="form-control"
             value={orderEmail}
-            onChange={(e) => setOrderEmail(e.target.value)}
+            onChange={(e) => {
+              setOrderEmail(e.target.value);
+              checkWarning();
+            }}
           ></input>
         </div>
       </div>
@@ -65,6 +99,12 @@ function SearchContainer() {
       >
         {loading ? <div className="spinner-border" role="status" /> : 'Visualizar Pedidos'}
       </button>
+
+      {showWarning ? (
+        <p className="warning-paragraph">
+          Pedido não encontrado, por favor verifique o número do pedido e email!
+        </p>
+      ) : null}
     </section>
   );
 }
