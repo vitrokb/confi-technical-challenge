@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
 function useFetch() {
-  const [result, setResult] = useState(null);
+  const [response, setResponse] = useState<{ orders: [{ [key: string]: unknown }] } | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async (url: string, options: object) => {
     setLoading(true);
     try {
-      const response = await fetch(url, options);
-      const jsonResult = await response.json();
+      const result = await fetch(url, options);
+      const jsonResult = await result.json();
 
-      setResult(jsonResult);
+      setResponse(jsonResult);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -18,7 +18,7 @@ function useFetch() {
     }
   };
 
-  return { result, loading, fetchData };
+  return { response, loading, fetchData, setResponse };
 }
 
 export default useFetch;
