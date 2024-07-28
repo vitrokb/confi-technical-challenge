@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useFetch } from '../../Hooks/useFetch';
+import { useFetchOrder } from '../../Hooks/useFetchOrder';
 import { useNavigate } from 'react-router-dom';
 import { OrderContext } from '../../contexts/OrderProvider/OrderProvider';
 import './SearchContainer.css';
@@ -9,10 +9,10 @@ function SearchContainer() {
   const [orderEmail, setOrderEmail] = useState('abner.persio@after.sale');
   const [showWarning, setShowWarning] = useState(false);
 
-  const { loading, response, fetchData, setResponse } = useFetch();
+  const { loading, response, fetchData, setResponse } = useFetchOrder();
   const navigate = useNavigate();
 
-  const { setOrders } = useContext(OrderContext);
+  const { setOrder } = useContext(OrderContext);
 
   function verifyEmail(email: string) {
     const emailReg = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -20,7 +20,9 @@ function SearchContainer() {
   }
 
   async function getOrder() {
-    const url = `https://send4-avaliacao.myshopify.com/admin/api/2024-04/orders.json?name=${orderNumber}&status=any`;
+    const url = `${
+      import.meta.env.VITE_BASE_URL
+    }/admin/api/2024-04/orders.json?name=${orderNumber}&status=any`;
     const options = {
       headers: {
         'X-Shopify-Access-Token': import.meta.env.VITE_ACCESS_TOKEN,
@@ -41,18 +43,16 @@ function SearchContainer() {
       return;
     }
 
-    if (response?.orders[0]?.email != orderEmail) {
+    if (response?.email != orderEmail) {
       setShowWarning(true);
       setResponse(null);
     }
 
-    if (response?.orders[0]?.email == orderEmail) {
-      setOrders(response);
+    if (response?.email == orderEmail) {
+      setOrder(response);
       return navigate('/order');
     }
-  }, [response, orderEmail, setResponse, navigate, setOrders]);
-
-  console.log('response', response);
+  }, [response, orderEmail, setResponse, navigate, setOrder]);
 
   return (
     <section className="w-75 h-50 m-3 d-flex flex-column justify-content-center align-items-center">
