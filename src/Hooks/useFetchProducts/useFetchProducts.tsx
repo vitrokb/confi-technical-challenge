@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { ProductType } from './ProductType';
 
-function useFetch() {
-  const [response, setResponse] = useState<{ orders: [{ [key: string]: unknown }] } | null>(null);
+function useFetchProducts() {
+  const [response, setResponse] = useState<{ products: ProductType[] } | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (url: string, options: object) => {
+  const fetchProducts = async (url: string, options: object) => {
     setLoading(true);
     try {
       const result = await fetch(url, options);
@@ -18,7 +19,7 @@ function useFetch() {
     }
   };
 
-  return { response, loading, fetchData, setResponse };
+  return { products: response?.products, loading, fetchProducts, setResponse };
 }
 
-export default useFetch;
+export default useFetchProducts;

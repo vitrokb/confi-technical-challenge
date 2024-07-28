@@ -24,6 +24,28 @@
   margin-top: 1rem;
 }
 
+.status-wrapper {
+  background-color: #32FC6E;
+  padding: .75rem 1rem;
+  text-align: center;
+  color: #000000;
+  border-radius: 15px;
+}
+
+.loading-screen {
+  background-color: #C0E2FA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.product-image {
+  width: 200px;
+  height: 200px;
+}
+
 @media (min-width: 575px) {
   .product-content {
     margin-top: 0;
