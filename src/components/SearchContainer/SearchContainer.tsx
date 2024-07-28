@@ -65,6 +65,7 @@ function SearchContainer() {
           </label>
           <input
             name="order-number"
+            id="order-number"
             type="text"
             className="form-control"
             value={orderNumber}
@@ -82,6 +83,7 @@ function SearchContainer() {
 
           <input
             name="order-email"
+            id="order-email"
             type="text"
             className="form-control"
             value={orderEmail}
@@ -97,7 +99,11 @@ function SearchContainer() {
         className="btn btn-primary mt-5 button-size"
         disabled={!verifyEmail(orderEmail)}
       >
-        {loading ? <div className="spinner-border" role="status" /> : 'Visualizar Pedidos'}
+        {loading ? (
+          <div data-testid="loading-spinner" className="spinner-border" role="status" />
+        ) : (
+          'Visualizar Pedidos'
+        )}
       </button>
 
       {showWarning ? (

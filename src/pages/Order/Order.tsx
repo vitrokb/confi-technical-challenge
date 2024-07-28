@@ -50,7 +50,10 @@ function Order() {
       <div className="d-flex flex-column flex-sm-row section-wrapper">
         <div className="field-content">
           <p className="mb-1 title-text">Status do pedido</p>
-          <p className="status-wrapper">{`${order?.fulfillments[0]?.status}`}</p>
+          <p
+            data-testid="status-text"
+            className="status-wrapper"
+          >{`${order?.fulfillments[0]?.status}`}</p>
         </div>
 
         <div className="field-content">
