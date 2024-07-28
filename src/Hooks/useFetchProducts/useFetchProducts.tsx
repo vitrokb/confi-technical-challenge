@@ -19,7 +19,7 @@ function useFetchProducts() {
     }
   };
 
-  return { products: response?.products, loading, fetchProducts, setResponse };
+  return { products: response?.products, loading, fetchProducts };
 }
 
 export default useFetchProducts;
